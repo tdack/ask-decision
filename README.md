@@ -9,27 +9,11 @@ Decision models are not chat models — they cannot be assigned to an agent's
 
 ## Install
 
-Install from GitHub (requires OpenCode plugin add):
-
 ```sh
 opencode plugin add github:tdack/ask-decision
 ```
 
-Or add the package directly to `opencode.jsonc`:
-
-```jsonc
-"plugins": [
-  {
-    "package": "opencode-ask-decision",
-    "options": {
-      "providerID": "openrouter",
-      "model": "typesafe/jev-1.14"
-    }
-  }
-]
-```
-
-> `opencode-ask-decision` is not yet published to npm; install via the GitHub route above until published.
+> Not published to npm. Install via the GitHub route above. Do not use an npm package name — `opencode-ask-decision` is not on the registry.
 
 ## License
 
@@ -45,7 +29,7 @@ supersedes auto-discovery, so it loads once, with your options.
   "@cloudflare/aig-opencode-plugin",
   "opencode-cache-hit@latest",
   {
-    "package": "opencode-ask-decision",
+    "package": "github:tdack/ask-decision",
     "options": {
       "providerID": "openrouter",
       "model": "typesafe/jev-1.14"
@@ -80,6 +64,13 @@ Environment variables override, same names with an `ASK_DECISION_` prefix:
 They are declared, not discovered. A provider entry using the `/decisions`
 package tells OpenCode where to send System One requests; the `providerID` and
 `model` options then name which one to use. See *Adding a decision model*.
+
+The plugin has no built-in default provider or model. `providerID` and `model`
+must be explicitly configured via plugin options or the `ASK_DECISION_PROVIDER`
+/ `ASK_DECISION_MODEL` environment variables. A parent chat provider can serve
+decision requests only when its model entry declares the `/decisions` package
+(see *Adding a decision model*). Without that package override, OpenCode
+rejects the call.
 
 A provider's own model list is not the test of whether a decision model works —
 OpenRouter's `/api/v1/models`, for instance, lists no decision model, yet serves

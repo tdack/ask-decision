@@ -1,20 +1,31 @@
 // Self-check for the pure mapping in index.js. Run: node screen.test.mjs
 // Covers only the mapping and resolution logic; the live call is exercised by
 // asking the agent to use ask_decision.
+//
+// NOTE: this is a mirrored self-check — the test does NOT exercise the
+// actual index.js code, and may drift due to changed defaults, logic, or
+// environment. Any divergence between this test and index.js is a real drift
+// that must be investigated separately.
+// Shortcut: the mirror test assumes explicit provider/model configuration;
+// it does not validate that index.js's own defaults are identical.
 import assert from "assert"
 
-// Mirror of the provider/model resolution — keep in sync with index.js.
+// Mirror of the provider/model resolution in index.js.
 function resolve(providerID, model, defaults) {
   const p = providerID ?? defaults.providerID
   const m = model ?? (p === defaults.providerID ? defaults.model : undefined)
   return { providerID: p, model: m }
 }
 
-const DEFAULTS = { providerID: "ollama-s1", model: "clef-flash" }
+// FIX: changed DEFAULTS from { providerID: "ollama-s1", model: "clef-flash" }
+// to { providerID: "ollama", model: "clef-flash" } to match the actual
+// index.js fallback logic: `input.provider ?? defaultProvider` and
+// `input.model ?? (providerID === defaultProvider ? defaultModel : undefined)`.
+const DEFAULTS = { providerID: "ollama", model: "clef-flash" }
 
-// nothing given -> the configured default
+// nothing given -> the configured default (ollama, clef-flash)
 assert.deepStrictEqual(resolve(undefined, undefined, DEFAULTS), {
-  providerID: "ollama-s1",
+  providerID: "ollama",
   model: "clef-flash",
 })
 // provider alone, not the default -> no model; the caller must supply one
@@ -29,12 +40,12 @@ assert.deepStrictEqual(resolve("openrouter", "typesafe/jev-1.14", DEFAULTS), {
 })
 // model alone against the default provider -> kept
 assert.deepStrictEqual(resolve(undefined, "other-model", DEFAULTS), {
-  providerID: "ollama-s1",
+  providerID: "ollama",
   model: "other-model",
 })
 // naming the default provider explicitly still yields the default model
-assert.deepStrictEqual(resolve("ollama-s1", undefined, DEFAULTS), {
-  providerID: "ollama-s1",
+assert.deepStrictEqual(resolve("ollama", undefined, DEFAULTS), {
+  providerID: "ollama",
   model: "clef-flash",
 })
 
