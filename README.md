@@ -9,10 +9,10 @@ Decision models are not chat models — they cannot be assigned to an agent's
 
 ## Install
 
-Once published, install via:
+Install from GitHub (requires OpenCode plugin add):
 
 ```sh
-opencode plugin add github:<owner>/ask-decision
+opencode plugin add github:tdack/ask-decision
 ```
 
 Or add the package directly to `opencode.jsonc`:
@@ -28,6 +28,12 @@ Or add the package directly to `opencode.jsonc`:
   }
 ]
 ```
+
+> `opencode-ask-decision` is not yet published to npm; install via the GitHub route above until published.
+
+## License
+
+[MIT](LICENSE)
 
 ## Configure
 

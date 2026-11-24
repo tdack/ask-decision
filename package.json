@@ -12,6 +12,11 @@
     "screen.test.mjs",
     "LICENSE"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tdack/ask-decision"
+  },
+  "license": "MIT",
   "dependencies": {
     "@opencode/plugin": "^2.0.18"
   }
