@@ -1,0 +1,18 @@
+{
+  "name": "opencode-ask-decision",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Expose a decision model to OpenCode agents as an on-demand tool.",
+  "exports": {
+    ".": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "README.md",
+    "screen.test.mjs",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "@opencode/plugin": "^2.0.18"
+  }
+}
