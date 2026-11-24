@@ -7,6 +7,28 @@ model it is told to.
 Decision models are not chat models — they cannot be assigned to an agent's
 `model:`. A plugin tool is the only route.
 
+## Install
+
+Once published, install via:
+
+```sh
+opencode plugin add github:<owner>/ask-decision
+```
+
+Or add the package directly to `opencode.jsonc`:
+
+```jsonc
+"plugins": [
+  {
+    "package": "opencode-ask-decision",
+    "options": {
+      "providerID": "openrouter",
+      "model": "typesafe/jev-1.14"
+    }
+  }
+]
+```
+
 ## Configure
 
 Options go on the plugin entry in `opencode.jsonc`. Declaring the plugin also
